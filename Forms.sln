@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ПРов", "ПРов\ПРо
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp2", "WindowsFormsApp2\WindowsFormsApp2.csproj", "{6504D6BB-581A-44AA-BD4E-2F174EE8A9CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4 d rjkbct", "4 d rjkbct\4 d rjkbct.csproj", "{74D09BF5-12A3-49CF-8269-F340BD2DF324}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4 in the whell", "4 d rjkbct\4 in the whell.csproj", "{74D09BF5-12A3-49CF-8269-F340BD2DF324}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Проверка", "Проверка\Проверка.csproj", "{B3B9B710-A1E0-43A6-A48E-22C46F38D9BC}"
 EndProject
