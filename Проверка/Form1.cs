@@ -10,39 +10,53 @@ using System.Windows.Forms;
 
 namespace Проверка
 {
+    public class Buttonn : Button
+    {
+        public int chislo { get; set; }
+    }
     public partial class Form1 : Form
     {
+        Buttonn[,] but = new Buttonn[8, 8];
+        //public Buttonn this[int i, int j]
+        //{
+        //    get { return but[i, j]; }
+        //    set { but[i, j] = value; }
+        //}
+        Label lb = new Label();
         public Form1()
         {
-            Button[,] but = new Button[8, 8];
-
             InitializeComponent();
+            int w = 1;
             int PointX = 10;
             int PointY = 10;
-            #region Инициализация поля
             for (int i = 0; i < but.GetLength(0); i++)
             {
                 for (int j = 0; j < but.GetLength(1); j++)
                 {
-                    but[i, j] = new Button();
-                    but[i, j].Size = new Size(50, 50);
-                    but[i, j].Location = new Point(PointX, PointY);
-                    but[i, j].Click += Form1_Click; ;
+                    but[i, j] = new Buttonn();
+                    but[i, j].Location = new System.Drawing.Point(PointX, PointY);
+                    but[i, j].Width = 40;
+                    but[i, j].Height = 40;
+                    but[i, j].Click += button_Click;
+                    but[i, j].chislo = w;
+                    //but[i, j].Text = $"{w}";
+                    w++;
                     Controls.Add(but[i, j]);
                     if (j == 7)
                     {
                         PointX = 10;
-                        PointY += but[i, j].Height + 5;                        
+                        PointY += but[i, j].Height + 5;
                     }
                     else PointX += but[i, j].Width + 5;
                 }
             }
-            #endregion
+            lb.Location = new Point(500, 50);
+            Controls.Add(lb);
         }
 
-        private void Form1_Click(object sender, EventArgs e)
+        private void button_Click(object sender, EventArgs e)
         {
-            //.Text = "X";
+            MessageBox.Show($" --- ", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

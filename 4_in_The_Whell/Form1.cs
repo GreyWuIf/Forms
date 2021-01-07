@@ -8,21 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _4_in_the_wheel
+namespace _4_in_The_Whell
 {
     public partial class Form1 : Form
     {
-        public Box[,] but = new Box[8, 8];
-
-        public XodPlayer player1 = new XodPlayer();
-
-        public Label lb = new Label();
-
+        public Box[,] but = new Box[8, 8]; // Массив кнопок
+        public Label lb = new Label(); // Поле хода игрока
         public Form1()
         {
             InitializeComponent();
-            lb.Text = $"Ходит {player1.number1} игрок";
             lb.Location = new Point(550, 40);
+            lb.Text = $"Ходит {Box.number1} игрок";
             int PointX = 10;
             int PointY = 10;
             #region Инициализация поля
@@ -30,21 +26,24 @@ namespace _4_in_the_wheel
             {
                 for (int j = 0; j < but.GetLength(1); j++)
                 {
-                    but[i, j] = new Box(PointX, PointY, player1, lb, i, j);
+                    but[i, j] = new Box(PointX, PointY);
                     Controls.Add(but[i, j]);
                     but[i, j].Enabled = false;
-                    but[i, j].TextChanged += Form1_TextChanged;
+                    but[i, j].TextChanged += Form1_Click;
+                    // Создает двумерное поле
                     if (j == 7)
                     {
                         PointX = 10;
                         PointY += but[i, j].Height + 5;                        
                     }
                     else PointX += but[i, j].Width + 5;
+                    // Скрывает не нужные кнопки по углам
                     if ((i == 0 || i == 7) && ((j == 0 || j == 7) || (j == 1 || j == 6)))
                     {
                         but[i, j].Visible = false;
                     }
                     else if ((i == 1 || i == 6) && (j == 0 || j == 7)) but[i, j].Visible = false;
+                    // Разблокирует нижние кнопки поля
                     switch (i)
                     {
                         case 5:
@@ -72,10 +71,15 @@ namespace _4_in_the_wheel
             Controls.Add(lb);
         }
 
-        private void Form1_TextChanged(object sender, EventArgs e)
+        private void Form1_Click(object sender, EventArgs e)
         {
             Check();
             Unlock();
+            if (Box.Win == 0)
+            {
+                Box.Players();
+            }
+            lb.Text = $"Ходит {Box.number1} игрок";
         }
         /// <summary>
         /// Проверка на победителя
@@ -91,7 +95,7 @@ namespace _4_in_the_wheel
                     List<Button> mas = new List<Button>();
                     for (int k = 0; k < 4; k++)
                     {
-                        if (but[i, j + k].indexPlayer == player1.number1)
+                        if (but[i, j + k].indexPlayer == Box.number1)
                         {
                             w++;
                             mas.Add(but[i, j + k]);
@@ -102,7 +106,8 @@ namespace _4_in_the_wheel
                                     item.ForeColor = Color.Red;
                                 }
                                 Box.Win = 1;
-                                lb.Text = $"Победил игрок {player1.number1}";
+                                MessegeBoxWin();
+                                lb.Text = $"Победил игрок {Box.number1}";
                                 Del();
                             }
                         }
@@ -119,7 +124,7 @@ namespace _4_in_the_wheel
                     List<Button> mas = new List<Button>();
                     for (int k = 0; k < 4; k++)
                     {
-                        if (but[i + k, j].indexPlayer == player1.number1)
+                        if (but[i + k, j].indexPlayer == Box.number1)
                         {
                             w++;
                             mas.Add(but[i + k, j]);
@@ -130,7 +135,8 @@ namespace _4_in_the_wheel
                                     item.ForeColor = Color.Red;
                                 }
                                 Box.Win = 1;
-                                lb.Text = $"Победил игрок {player1.number1}";
+                                MessegeBoxWin();
+                                lb.Text = $"Победил игрок {Box.number1}";
                                 Del();
                             }
                         }
@@ -147,7 +153,7 @@ namespace _4_in_the_wheel
                     List<Button> mas = new List<Button>();
                     for (int k = 0; k < 4; k++)
                     {
-                        if (but[i + k, j - k].indexPlayer == player1.number1)
+                        if (but[i + k, j - k].indexPlayer == Box.number1)
                         {
                             w++;
                             mas.Add(but[i + k, j - k]);
@@ -158,7 +164,8 @@ namespace _4_in_the_wheel
                                     item.ForeColor = Color.Red;
                                 }
                                 Box.Win = 1;
-                                lb.Text = $"Победил игрок {player1.number1}";
+                                MessegeBoxWin();
+                                lb.Text = $"Победил игрок {Box.number1}";
                                 Del();
                             }
                         }
@@ -173,7 +180,7 @@ namespace _4_in_the_wheel
                     List<Button> mas = new List<Button>();
                     for (int k = 0; k < 4; k++)
                     {
-                        if (but[i + k, j + k].indexPlayer == player1.number1)
+                        if (but[i + k, j + k].indexPlayer == Box.number1)
                         {
                             w++;
                             mas.Add(but[i + k, j + k]);
@@ -184,7 +191,8 @@ namespace _4_in_the_wheel
                                     item.ForeColor = Color.Red;
                                 }
                                 Box.Win = 1;
-                                lb.Text = $"Победил игрок {player1.number1}";
+                                MessegeBoxWin();
+                                lb.Text = $"Победил игрок {Box.number1}";
                                 Del();
                             }
                         }
@@ -192,19 +200,6 @@ namespace _4_in_the_wheel
                 }
             }
             #endregion
-        }
-        /// <summary>
-        /// Удаляет у кнопки действие
-        /// </summary>
-        public void Del()
-        {
-            for (int i = 0; i < but.GetLength(0); i++)
-            {
-                for (int j = 0; j < but.GetLength(1); j++)
-                {
-                    but[i, j].Remove();
-                }
-            }
         }
         /// <summary>
         /// Снимает блокировку кнопки выше
@@ -220,12 +215,29 @@ namespace _4_in_the_wheel
                         but[i - 1, j].Enabled = true;
                     }
                 }
-            } 
+            }
         }
-
+        /// <summary>
+        /// Удаляет у кнопки действие
+        /// </summary>
+        public void Del()
+        {
+            for (int i = 0; i < but.GetLength(0); i++)
+            {
+                for (int j = 0; j < but.GetLength(1); j++)
+                {
+                    but[i, j].Remove();
+                }
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+        public void MessegeBoxWin()
+        {
+            DialogResult result = MessageBox.Show($"Победил {Box.number1} игрок\nСыграете еще раз?", "Поздравляем", MessageBoxButtons.YesNo, MessageBoxIcon.None);
+            if(result == DialogResult.Yes) { button1_Click(null, null); }
         }
     }
 }
